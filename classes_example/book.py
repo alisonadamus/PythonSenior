@@ -13,3 +13,4 @@ book2 = Book("1984", "George Orwell", 1949)
 
 print(book1.get_info())
 print(book2.get_info())
+print(book1)

@@ -26,3 +26,4 @@ while hero1.is_alive() and hero2.is_alive():
     if not hero1.is_alive():
         print(f"{hero1.name} переможений")
         break
+

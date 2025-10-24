@@ -8,6 +8,7 @@ class Game():
         self.player = player
         self.enemies = enemies
         self.price = price
+        self.score = 0
         self.clock = pygame.time.Clock()
 
     def run(self):
@@ -26,12 +27,12 @@ class Game():
         self.player.move()
         for enemy in self.enemies:
             enemy.move()
-
             if self.player.x in range(enemy.x - 20,enemy.x + 20) and self.player.y in range(enemy.y - 20,enemy.y + 20):
                 self.player.x = 20
                 self.player.y = 580
 
         if self.player.x in range(price.x - 25, price.x + 25) and self.player.y in range(price.y - 25, price.y + 25):
+            self.score += 1
             self.price.move()
 
 
@@ -41,6 +42,10 @@ class Game():
         self.player.draw(self.screen)
         for enemy in self.enemies:
             enemy.draw(self.screen)
+
+        font = pygame.font.SysFont('comicsans', 30)
+        text = font.render('Score: %d' % self.score, True, (255,255,255))
+        self.screen.blit(text, (10,10))
         pygame.display.flip()
 
 class Player():
@@ -57,14 +62,21 @@ class Player():
 
     def move(self):
         key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]:
-            self.x -= self.speed
-        if key[pygame.K_RIGHT]:
-            self.x += self.speed
-        if key[pygame.K_UP]:
-            self.y -= self.speed
-        if key[pygame.K_DOWN]:
-            self.y += self.speed
+        if self.x > 0:
+            if key[pygame.K_LEFT]:
+                self.x -= self.speed
+        if self.x < 800:
+            if key[pygame.K_RIGHT]:
+                self.x += self.speed
+        if self.y > 0:
+            if key[pygame.K_UP]:
+                self.y -= self.speed
+        if self.y < 600:
+            if key[pygame.K_DOWN]:
+                self.y += self.speed
+
+
+
 
 class Enemy():
     def __init__(self, size, color):

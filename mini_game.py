@@ -76,8 +76,6 @@ class Player():
                 self.y += self.speed
 
 
-
-
 class Enemy():
     def __init__(self, size, color):
         self.x = random.randint(0, 800)

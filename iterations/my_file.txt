@@ -1,0 +1,73 @@
+Ітератори в Python
+Ітератор — це об'єкт, який дозволяє послідовно проходити по елементам.
+Він має методи __iter__() та __next__().
+Коли елементів більше немає — кидає StopIteration.
+
+Генератори — це простий спосіб створити ітератор.
+Використовується ключове слово yield.
+Генератор "запам'ятовує" стан між викликами.
+
+Замикання (closures) — функція, яка запам'ятовує змінні з зовнішньої області.
+Корисно для створення фабрик функцій.
+
+Декоратори — функції, які модифікують поведінку інших функцій.
+Синтаксис: @decorator над функцією.
+Популярні: @staticmethod, @property, @cache.
+
+Ітератори економлять пам'ять.
+Генератори — ліниві обчислення.
+Замикання — стан без класу.
+Декоратори — чистий код.
+
+""" + "\n" + "="*50 + "\n" + """
+Приклад ітератора:
+class Counter:
+    def __init__(self, n): self.n = n
+    def __iter__(self): return self
+    def __next__(self):
+        if self.n <= 0: raise StopIteration
+        self.n -= 1
+        return self.n + 1
+
+Приклад генератора:
+def fib():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+Приклад замикання:
+def make_adder(x):
+    def adder(y): return x + y
+    return adder
+add5 = make_adder(5)
+
+Приклад декоратора:
+def timer(func):
+    def wrapper(*args):
+        import time
+        start = time.time()
+        result = func(*args)
+        print(f"Час: {time.time() - start}")
+        return result
+    return wrapper
+
+""" + "\n" + "─"*50 + "\n" + """
+Ітератори використовуються всюди: for, list(), sum(), any().
+Файли — це ітератори рядків.
+range() — ітератор чисел.
+itertools — бібліотека для роботи з ітераторами.
+
+Генераторні вирази: (x**2 for x in range(10))
+Працюють як list comprehension, але ліниво.
+
+yield from — делегування в підгенератор.
+Корисно для композиції пайплайнів.
+
+Декоратори з параметрами:
+def repeat(n):
+    def decorator(func):
+        def wrapper(*args):
+            for _ in range(n): func(*args)
+        return wrapper
+    return decorator
